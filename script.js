@@ -23,8 +23,9 @@ async function loadLive2D() {
       button.textContent = '再動一次';
     });
   } catch (error) {
-    console.error(error);
-    status.textContent = '模型載入失敗。請以本機伺服器開啟網站。';
+    console.error('Live2D model load failed:', error);
+    const detail = error instanceof Error ? error.message : String(error);
+    status.textContent = `模型載入失敗：${detail}`;
     button.hidden = true;
   }
 }
