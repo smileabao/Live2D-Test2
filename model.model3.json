@@ -6,7 +6,9 @@
     "Physics": "assets/live2d/physics3.json",
     "Motions": {
       "Wave": [
-        { "File": "assets/live2d/wave_loop.motion3.json" }
+        { "File": "assets/live2d/wave_loop.motion3.json" },
+        { "File": "assets/live2d/wave2.motion3.json" }
+
       ]
     }
 ,

@@ -20,7 +20,7 @@ async function loadLive2D() {
     window.addEventListener('resize', fit);
     status.textContent = '模型已就緒・試著移動滑鼠';
     button.addEventListener('click', () => {
-      model.internalModel.motionManager.startRandomMotion('Idle');
+      model.internalModel.motionManager.startRandomMotion('Wave');
       button.textContent = '再動一次';
     });
   } catch (error) {
