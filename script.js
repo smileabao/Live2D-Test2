@@ -10,10 +10,11 @@ async function loadLive2D() {
     const baseWidth = model.width;
     const baseHeight = model.height;
     const fit = () => {
-      const scale = Math.min(app.renderer.width / baseWidth * 0.82, app.renderer.height / baseHeight * 0.88);
+      // 放大並由畫布裁切下半身，保留右下角的上半身角色。
+      const scale = Math.max(app.renderer.width / baseWidth * 0.98, app.renderer.height / baseHeight * 1.38);
       model.scale.set(scale);
       model.x = (app.renderer.width - baseWidth * scale) / 2;
-      model.y = app.renderer.height - baseHeight * scale;
+      model.y = 0;
     };
     fit();
     window.addEventListener('resize', fit);

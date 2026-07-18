@@ -1,0 +1,16 @@
+/* Floating Live2D avatar: anchored to the lower-right viewport edge. */
+.live-stage {
+  position: fixed;
+  right: 22px;
+  bottom: 0;
+  width: min(360px, 31vw);
+  height: 440px;
+  z-index: 20;
+  overflow: hidden;
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.28));
+  background: radial-gradient(ellipse at 50% 65%, rgba(64, 81, 108, 0.55), transparent 68%);
+}
+
+@media (max-width: 720px) {
+  .live-stage { right: 0; width: 240px; height: 310px; }
+}
