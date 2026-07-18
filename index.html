@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Akuru 的個人履歷與作品集" />
+    <title>Akuru — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain"></div>
+    <header class="nav wrap">
+      <a class="logo" href="#top">AKURU<span>.</span></a>
+      <nav aria-label="主選單"><a href="#about">關於我</a><a href="#work">作品</a><a href="#contact">聯絡</a></nav>
+    </header>
+    <main id="top">
+      <section class="hero wrap">
+        <div class="hero-copy">
+          <p class="eyebrow">PORTFOLIO / 2026</p>
+          <h1>把想像，<br /><em>做成會呼吸的體驗。</em></h1>
+          <p class="intro">嗨，我是 Akuru。專注於視覺設計、互動內容與數位創作，喜歡讓每個畫面都有自己的性格。</p>
+          <a class="button" href="#work">查看精選作品 <span>↓</span></a>
+        </div>
+        <div class="hero-art">
+          <div class="sun"></div>
+          <img src="assets/portrait.png" alt="Akuru 的人物圖像" />
+          <p class="vertical">HELLO, I AM AKURU</p>
+        </div>
+      </section>
+      <section id="about" class="about wrap">
+        <p class="eyebrow">01 / ABOUT ME</p>
+        <div class="about-grid"><h2>用設計說故事，<br />用細節留住目光。</h2><div><p>我是一名喜歡探索新媒體的創作者。從企劃、視覺到互動製作，我享受把模糊的想法慢慢打磨成完整的作品。</p><ul><li>視覺設計與品牌識別</li><li>Live2D 與角色互動</li><li>網頁設計與前端製作</li></ul></div></div>
+      </section>
+      <section id="work" class="works wrap">
+        <p class="eyebrow">02 / SELECTED WORK</p>
+        <h2>精選作品</h2>
+        <div class="cards"><article class="card card-one"><span>01</span><h3>Character<br />Design</h3><p>角色視覺與設定設計</p></article><article class="card card-two"><span>02</span><h3>Motion<br />Experience</h3><p>動態與互動內容製作</p></article><article class="card card-three"><span>03</span><h3>Digital<br />Stories</h3><p>數位敘事與網頁專案</p></article></div>
+      </section>
+      <section class="live-section" aria-labelledby="live-title">
+        <div class="wrap live-grid"><div><p class="eyebrow">03 / LIVE2D</p><h2 id="live-title">來和我<br /><em>打個招呼吧。</em></h2><p>這是我的 Live2D 模型。移動滑鼠或觸控螢幕，看看角色會如何回應你。</p><button id="toggle-motion" type="button">啟用互動</button><p id="model-status" class="status" aria-live="polite">正在載入模型…</p></div><div class="live-stage"><canvas id="live2d-canvas" aria-label="可互動的 Live2D 角色"></canvas><span class="drag-note">MOVE / TOUCH</span></div></div>
+      </section>
+      <section id="contact" class="contact wrap"><p class="eyebrow">04 / CONTACT</p><h2>有想法想聊聊？</h2><a href="mailto:hello@example.com">hello@example.com <span>↗</span></a></section>
+    </main>
+    <footer class="wrap"><span>© 2026 AKURU</span><span>DESIGNED WITH CARE</span></footer>
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@6.5.10/dist/browser/pixi.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.4.0/dist/cubism4.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
