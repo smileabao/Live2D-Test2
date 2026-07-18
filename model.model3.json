@@ -9,6 +9,17 @@
         { "File": "assets/live2d/wave_loop.motion3.json" }
       ]
     }
+,
+    "Expressions": [
+ {
+  "Name":"Happy",
+  "File":"assets/live2d/happy.exp3.json"
+ },
+ {
+  "Name":"Warning",
+  "File":"assets/live2d/warning.exp3.json"
+ }
+]
   },
   "Groups": [
     { "Target": "Parameter", "Name": "EyeBlink", "Ids": [] },
