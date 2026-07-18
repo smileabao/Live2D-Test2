@@ -18,7 +18,10 @@ async function loadLive2D() {
     fit();
     window.addEventListener('resize', fit);
     status.textContent = '模型已就緒・試著移動滑鼠';
-    button.addEventListener('click', () => { model.internalModel.motionManager.startRandomMotion(); button.textContent = '再動一次'; });
+    button.addEventListener('click', () => {
+      model.internalModel.motionManager.startRandomMotion('Idle');
+      button.textContent = '再動一次';
+    });
   } catch (error) {
     console.error(error);
     status.textContent = '模型載入失敗。請以本機伺服器開啟網站。';
