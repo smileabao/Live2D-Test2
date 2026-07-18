@@ -5,8 +5,8 @@
     "Textures": ["assets/live2d/texture_00.png", "assets/live2d/texture_01.png"],
     "Physics": "assets/live2d/physics3.json",
     "Motions": {
-      "Idle": [
-        { "File": "assets/live2d/idle.motion3.json" }
+      "Wave": [
+        { "File": "assets/live2d/wave_loop.motion3.json" }
       ]
     }
   },
