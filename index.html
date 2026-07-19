@@ -51,7 +51,32 @@
         <div class="cards"><article class="card card-one"><span>01</span><h3>Character<br />Design</h3><p>角色視覺與設定設計</p></article><article class="card card-two"><span>02</span><h3>Motion<br />Experience</h3><p>動態與互動內容製作</p></article><article class="card card-three"><span>03</span><h3>Digital<br />Stories</h3><p>數位敘事與網頁專案</p></article></div>
       </section>
       <section class="live-section" aria-labelledby="live-title">
-        <div class="wrap live-grid"><div><p class="eyebrow">03 / LIVE2D</p><h2 id="live-title">來和我<br /><em>打個招呼吧。</em></h2><p>這是我的 Live2D 模型。移動滑鼠或觸控螢幕，看看角色會如何回應你。</p><button id="toggle-motion" type="button">啟用互動</button><p id="model-status" class="status" aria-live="polite">正在載入模型…</p></div><div class="live-stage"><canvas id="live2d-canvas" aria-label="可互動的 Live2D 角色"></canvas><span class="drag-note">MOVE / TOUCH</span></div></div>
+        <div class="wrap live-grid"><div><p class="eyebrow">03 / LIVE2D</p><h2 id="live-title">來和我<br /><em>打個招呼吧。</em></h2><p>這是我的 Live2D 模型。移動滑鼠或觸控螢幕，看看角色會如何回應你。</p>            <button id="toggle-motion" type="button">啟用互動</button>
+            <div class="live-controls">
+              <div class="control-group">
+                <label>手動切換表情 (Expression)：</label>
+                <div class="btn-grid" id="expr-buttons">
+                  <button type="button" class="control-btn active" data-expr="null">正常</button>
+                  <button type="button" class="control-btn" data-expr="Happy">Happy</button>
+                  <button type="button" class="control-btn" data-expr="Warning">Warning</button>
+                  <button type="button" class="control-btn" data-expr="Cry">Cry</button>
+                  <button type="button" class="control-btn" data-expr="Blush">Blush</button>
+                  <button type="button" class="control-btn" data-expr="Dark">Dark</button>
+                  <button type="button" class="control-btn" data-expr="SlightBlush">SlightBlush</button>
+                  <button type="button" class="control-btn" data-expr="Sad">Sad</button>
+                  <button type="button" class="control-btn" data-expr="HandPose">HandPose</button>
+                </div>
+              </div>
+              <div class="control-group">
+                <label>手動播放動作 (Motion)：</label>
+                <div class="btn-grid" id="motion-buttons">
+                  <button type="button" class="control-btn" data-group="Wave" data-index="0">揮手 1 (wave_loop)</button>
+                  <button type="button" class="control-btn" data-group="Wave" data-index="1">揮手 2 (wave2)</button>
+                  <button type="button" class="control-btn" data-group="Shake" data-index="0">搖頭 (shake)</button>
+                </div>
+              </div>
+            </div>
+            <p id="model-status" class="status" aria-live="polite">正在載入模型…</p></div><div class="live-stage"><canvas id="live2d-canvas" aria-label="可互動的 Live2D 角色"></canvas><span class="drag-note">MOVE / TOUCH</span></div></div>
       </section>
       <section id="contact" class="contact wrap"><p class="eyebrow">04 / CONTACT</p><h2>有想法想聊聊？</h2><a href="mailto:hello@example.com">hello@example.com <span>↗</span></a></section>
     </main>

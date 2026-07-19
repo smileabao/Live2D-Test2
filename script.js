@@ -47,9 +47,28 @@ async function loadLive2D() {
       model.motion(nextMotion.group, nextMotion.index);
     };
 
+    // 取得所有控制按鈕
+    const exprButtons = document.querySelectorAll('#expr-buttons .control-btn');
+    const motionButtons = document.querySelectorAll('#motion-buttons .control-btn');
+
+    const clearExprHighlights = () => {
+      exprButtons.forEach(b => b.classList.remove('active'));
+    };
+
+    const clearMotionHighlights = () => {
+      motionButtons.forEach(b => b.classList.remove('active'));
+    };
+
     // 當滑鼠移入畫布時觸發表情與動作
     canvas.addEventListener('mouseenter', () => {
       isHovering = true;
+      clearExprHighlights();
+      clearMotionHighlights();
+      
+      // 預設將「正常」表情設為 active
+      const normalBtn = document.querySelector('#expr-buttons .control-btn[data-expr="null"]');
+      if (normalBtn) normalBtn.classList.add('active');
+
       setRandomExpression();
       playNextMotion();
     });
@@ -58,6 +77,12 @@ async function loadLive2D() {
     canvas.addEventListener('mouseleave', () => {
       isHovering = false;
       model.expression(null); // 恢復預設表情
+      clearExprHighlights();
+      clearMotionHighlights();
+      
+      // 預設將「正常」表情設為 active
+      const normalBtn = document.querySelector('#expr-buttons .control-btn[data-expr="null"]');
+      if (normalBtn) normalBtn.classList.add('active');
     });
 
     // 當一個動作播放完畢後，如果滑鼠仍在角色上，就繼續隨機播放下一個動作與切換表情
@@ -68,9 +93,43 @@ async function loadLive2D() {
       }
     });
 
+    // 綁定表情切換按鈕
+    exprButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        isHovering = false; // 點擊按鈕切換為手動模式，停止滑鼠移入的隨機輪播
+        clearExprHighlights();
+        btn.classList.add('active');
+
+        const exprName = btn.getAttribute('data-expr');
+        if (exprName === 'null') {
+          model.expression(null);
+          status.textContent = '表情已重設為正常';
+        } else {
+          model.expression(exprName);
+          status.textContent = `表情已切換為: ${exprName}`;
+        }
+      });
+    });
+
+    // 綁定動作切換按鈕
+    motionButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        isHovering = false; // 點擊按鈕切換為手動模式，停止滑鼠移入的隨機輪播
+        clearMotionHighlights();
+        btn.classList.add('active');
+
+        const group = btn.getAttribute('data-group');
+        const index = parseInt(btn.getAttribute('data-index'), 10);
+        model.motion(group, index);
+        status.textContent = `動作已播放: ${group} (${index === 0 ? '第一個動作' : '第二個動作'})`;
+      });
+    });
+
     button.addEventListener('click', () => {
+      isHovering = false;
       model.internalModel.motionManager.startRandomMotion('Wave');
       button.textContent = '再動一次';
+      status.textContent = '播放隨機 Wave 動作';
     });
   } catch (error) {
     console.error('Live2D model load failed:', error);
