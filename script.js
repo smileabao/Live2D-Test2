@@ -18,7 +18,49 @@ async function loadLive2D() {
     };
     fit();
     window.addEventListener('resize', fit);
-    status.textContent = '模型已就緒・試著移動滑鼠';
+    status.textContent = '模型已就緒・試著將滑鼠移到角色上';
+    
+    let isHovering = false;
+    let lastMotionIndex = -1;
+    const expressions = ['Happy', 'Warning'];
+
+    const setRandomExpression = () => {
+      const randomExpr = expressions[Math.floor(Math.random() * expressions.length)];
+      model.expression(randomExpr);
+    };
+
+    const playNextMotion = () => {
+      if (!isHovering) return;
+      // 隨機選擇 Wave 群組中的一個動作（0 或 1），並確保不與上次重複
+      let index = Math.floor(Math.random() * 2);
+      if (index === lastMotionIndex) {
+        index = (index + 1) % 2;
+      }
+      lastMotionIndex = index;
+      model.motion('Wave', index);
+    };
+
+    // 當滑鼠移入畫布時觸發表情與動作
+    canvas.addEventListener('mouseenter', () => {
+      isHovering = true;
+      setRandomExpression();
+      playNextMotion();
+    });
+
+    // 當滑鼠移出畫布時恢復表情
+    canvas.addEventListener('mouseleave', () => {
+      isHovering = false;
+      model.expression(null); // 恢復預設表情
+    });
+
+    // 當一個動作播放完畢後，如果滑鼠仍在角色上，就繼續隨機播放下一個動作與切換表情
+    model.internalModel.motionManager.on('motionFinish', () => {
+      if (isHovering) {
+        setRandomExpression();
+        playNextMotion();
+      }
+    });
+
     button.addEventListener('click', () => {
       model.internalModel.motionManager.startRandomMotion('Wave');
       button.textContent = '再動一次';
