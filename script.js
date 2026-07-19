@@ -21,8 +21,13 @@ async function loadLive2D() {
     status.textContent = '模型已就緒・試著將滑鼠移到角色上';
     
     let isHovering = false;
-    let lastMotionIndex = -1;
-    const expressions = ['Happy', 'Warning'];
+    let lastMotionId = -1;
+    const expressions = ['Happy', 'Warning', 'Cry', 'Blush', 'Dark', 'SlightBlush', 'Sad', 'HandPose'];
+    const motions = [
+      { group: 'Wave', index: 0 },
+      { group: 'Wave', index: 1 },
+      { group: 'Shake', index: 0 }
+    ];
 
     const setRandomExpression = () => {
       const randomExpr = expressions[Math.floor(Math.random() * expressions.length)];
@@ -31,13 +36,15 @@ async function loadLive2D() {
 
     const playNextMotion = () => {
       if (!isHovering) return;
-      // 隨機選擇 Wave 群組中的一個動作（0 或 1），並確保不與上次重複
-      let index = Math.floor(Math.random() * 2);
-      if (index === lastMotionIndex) {
-        index = (index + 1) % 2;
+      // 隨機選擇一個動作，並確保不與上次重複
+      let motionId = Math.floor(Math.random() * motions.length);
+      if (motionId === lastMotionId) {
+        motionId = (motionId + 1) % motions.length;
       }
-      lastMotionIndex = index;
-      model.motion('Wave', index);
+      lastMotionId = motionId;
+      
+      const nextMotion = motions[motionId];
+      model.motion(nextMotion.group, nextMotion.index);
     };
 
     // 當滑鼠移入畫布時觸發表情與動作

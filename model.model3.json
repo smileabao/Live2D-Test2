@@ -8,20 +8,45 @@
       "Wave": [
         { "File": "assets/live2d/wave_loop.motion3.json" },
         { "File": "assets/live2d/wave2.motion3.json" }
-
+      ],
+      "Shake": [
+        { "File": "assets/live2d/shake.motion3.json" }
       ]
-    }
-,
+    },
     "Expressions": [
- {
-  "Name":"Happy",
-  "File":"assets/live2d/happy.exp3.json"
- },
- {
-  "Name":"Warning",
-  "File":"assets/live2d/warning.exp3.json"
- }
-]
+      {
+        "Name": "Happy",
+        "File": "assets/live2d/happy.exp3.json"
+      },
+      {
+        "Name": "Warning",
+        "File": "assets/live2d/warning.exp3.json"
+      },
+      {
+        "Name": "Cry",
+        "File": "assets/live2d/Cry.exp3.json"
+      },
+      {
+        "Name": "Blush",
+        "File": "assets/live2d/Blush.exp3.json"
+      },
+      {
+        "Name": "Dark",
+        "File": "assets/live2d/Dark.exp3.json"
+      },
+      {
+        "Name": "SlightBlush",
+        "File": "assets/live2d/SlightBlush.exp3.json"
+      },
+      {
+        "Name": "Sad",
+        "File": "assets/live2d/Sad.exp3.json"
+      },
+      {
+        "Name": "HandPose",
+        "File": "assets/live2d/HandPose.exp3.json"
+      }
+    ]
   },
   "Groups": [
     { "Target": "Parameter", "Name": "EyeBlink", "Ids": [] },
