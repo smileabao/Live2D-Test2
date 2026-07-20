@@ -5,7 +5,8 @@ const canvas = document.querySelector('#live2d-canvas');
 async function loadLive2D() {
   try {
     const app = new PIXI.Application({ view: canvas, autoStart: true, resizeTo: canvas.parentElement, transparent: true, antialias: true });
-    const model = await PIXI.live2d.Live2DModel.from('model.model3.json', { autoInteract: true });
+    // 建立模型，預設關閉 autoInteract (游標跟隨與自動點擊測試)
+    const model = await PIXI.live2d.Live2DModel.from('model.model3.json', { autoInteract: false });
     app.stage.addChild(model);
     const baseWidth = model.width;
     const baseHeight = model.height;
@@ -64,7 +65,6 @@ async function loadLive2D() {
       ]
     };
     
-    let isHovering = false;
     let lastMotionId = -1;
     let bubbleTimeout = null;
     const expressions = ['Happy', 'Warning', 'Cry', 'Blush', 'Dark', 'SlightBlush', 'Sad', 'HandPose'];
@@ -101,11 +101,9 @@ async function loadLive2D() {
         clearTimeout(bubbleTimeout);
       }
       bubbleTimeout = setTimeout(() => {
-        if (!isHovering) {
-          const bubble = document.querySelector('#live2d-bubble');
-          if (bubble) {
-            bubble.classList.remove('show');
-          }
+        const bubble = document.querySelector('#live2d-bubble');
+        if (bubble) {
+          bubble.classList.remove('show');
         }
       }, delay);
     };
@@ -117,7 +115,6 @@ async function loadLive2D() {
     };
 
     const playNextMotion = () => {
-      if (!isHovering) return;
       // 隨機選擇一個動作，並確保不與上次重複
       let motionId = Math.floor(Math.random() * motions.length);
       if (motionId === lastMotionId) {
@@ -146,47 +143,47 @@ async function loadLive2D() {
       motionButtons.forEach(b => b.classList.remove('active'));
     };
 
-    // 當滑鼠移入畫布時觸發表情與動作
-    canvas.addEventListener('mouseenter', () => {
-      isHovering = true;
+    // 點擊畫布時，隨機播放一個表情與動作
+    canvas.addEventListener('click', () => {
       clearExprHighlights();
       clearMotionHighlights();
-      
-      // 預設將「正常」表情設為 active
-      const normalBtn = document.querySelector('#expr-buttons .control-btn[data-expr="null"]');
-      if (normalBtn) normalBtn.classList.add('active');
-
       setRandomExpression();
       playNextMotion();
+      // 點擊後 4 秒隱藏對話框
+      hideBubbleAfterDelay(4000);
     });
 
-    // 當滑鼠移出畫布時恢復表情
-    canvas.addEventListener('mouseleave', () => {
-      isHovering = false;
-      model.expression(null); // 恢復預設表情
-      clearExprHighlights();
-      clearMotionHighlights();
-      
-      // 預設將「正常」表情設為 active
-      const normalBtn = document.querySelector('#expr-buttons .control-btn[data-expr="null"]');
-      if (normalBtn) normalBtn.classList.add('active');
-
-      // 滑鼠離開後，3秒後隱藏對話框
-      hideBubbleAfterDelay(3000);
-    });
-
-    // 當一個動作播放完畢後，如果滑鼠仍在角色上，就繼續隨機播放下一個動作與切換表情
-    model.internalModel.motionManager.on('motionFinish', () => {
-      if (isHovering) {
-        setRandomExpression();
-        playNextMotion();
+    // 游標跟隨功能切換
+    let isTrackingEnabled = false;
+    const toggleTrackingBtn = document.querySelector('#toggle-tracking');
+    
+    window.addEventListener('pointermove', (event) => {
+      if (isTrackingEnabled && model.focus) {
+        // 更新游標位置讓角色視線跟隨
+        model.focus(event.clientX, event.clientY);
       }
     });
+
+    if (toggleTrackingBtn) {
+      toggleTrackingBtn.addEventListener('click', () => {
+        isTrackingEnabled = !isTrackingEnabled;
+        if (isTrackingEnabled) {
+          toggleTrackingBtn.textContent = '關閉游標跟隨 (目前：開啟)';
+          toggleTrackingBtn.classList.add('active');
+        } else {
+          toggleTrackingBtn.textContent = '啟用游標跟隨 (目前：關閉)';
+          toggleTrackingBtn.classList.remove('active');
+          // 取消跟隨，視線回正 (視窗中央點)
+          if (model.focus) {
+            model.focus(window.innerWidth / 2, window.innerHeight / 2);
+          }
+        }
+      });
+    }
 
     // 綁定表情切換按鈕
     exprButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        isHovering = false; // 點擊按鈕切換為手動模式，停止滑鼠移入的隨機輪播
         clearExprHighlights();
         btn.classList.add('active');
 
@@ -207,7 +204,6 @@ async function loadLive2D() {
     // 綁定動作切換按鈕
     motionButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        isHovering = false; // 點擊按鈕切換為手動模式，停止滑鼠移入的隨機輪播
         clearMotionHighlights();
         btn.classList.add('active');
 
@@ -225,7 +221,6 @@ async function loadLive2D() {
     });
 
     button.addEventListener('click', () => {
-      isHovering = false;
       model.internalModel.motionManager.startRandomMotion('Wave');
       button.textContent = '再動一次';
       status.textContent = '播放隨機 Wave 動作';
